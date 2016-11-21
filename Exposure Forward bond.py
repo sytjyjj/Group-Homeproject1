@@ -1,4 +1,4 @@
-#%matplotlib inline
+#\%matplotlib inline
 from datetime import date
 import time
 import pandas as pd
@@ -29,6 +29,15 @@ trim_end = date(2010,12,31)  # Last Date of the Portfolio
 start = date(2005, 3, 10)
 referenceDate = date(2005, 3, 10)
 
+
+# myScheduler = Scheduler()
+# ReferenceDateList = myScheduler.getSchedule(start=referenceDate,end=trim_end,freq="1M", referencedate=referenceDate)
+# # Create Simulator
+# xOIS = [ 3.0,  0.07536509, -0.208477,  0.07536509]
+# myVasicek = MC_Vasicek_Sim(ReferenceDateList,xOIS,simNumber,1/365.0)
+# myVasicek.setVasicek(x=xOIS,minDay=trim_start,maxDay=trim_end,simNumber=simNumber,t_step=1/365.0)
+# myVasicek.getLibor()
+
 myScheduler = Scheduler()
 ReferenceDateList = myScheduler.getSchedule(start=referenceDate,end=trim_end,freq="1M", referencedate=referenceDate)
 # Create Simulator
@@ -37,14 +46,15 @@ myVasicek = MC_Vasicek_Sim(ReferenceDateList,xOIS,simNumber,1/365.0)
 myVasicek.setVasicek(x=xOIS,minDay=trim_start,maxDay=trim_end,simNumber=simNumber,t_step=1/365.0)
 myVasicek.getLibor()
 
+
 # Create Coupon Bond with several startDates.
 SixMonthDelay = myScheduler.extractDelay("6M")
 TwoYearsDelay = myScheduler.extractDelay("2Y")
-#startDates = [referenceDate + nprnd.randint(0,3)*SixMonthDelay for r in range(10)]
+startDates = [referenceDate + nprnd.randint(0,3)*SixMonthDelay for r in range(10)]
 
 # For debugging uncomment this to choose a single date for the forward bond
 # print(startDates)
-startDates = [date(2005,3,10)+SixMonthDelay]#,[date(2005,3,10)+TwoYearsDelay ]
+startDates = [date(2005,3,10)+SixMonthDelay,date(2005,3,10)+TwoYearsDelay ]
 maturities = [(x+TwoYearsDelay) for x in startDates]
 
 myPortfolio = {}
