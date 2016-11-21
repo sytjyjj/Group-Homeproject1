@@ -84,11 +84,12 @@ class CouponBond(object):
         
     def getScheduleComplete(self):
         self.datelist = self.myScheduler.getSchedule(start=self.start,end=self.maturity,freq=self.freq,referencedate=self.referencedate)
+        self.ntimes = len(self.datelist) #Set ntimes's value equal to the length of datelist
         fullset = list(sorted(list(set(self.datelist)
                                    .union([self.referencedate])
                                    .union([self.start])
                                    .union([self.maturity])
-                                   .union([self.observationdate])
+                                   ##Delete observationdate .union([self.observationdate])
                                    )))
         return fullset,self.datelist
 
