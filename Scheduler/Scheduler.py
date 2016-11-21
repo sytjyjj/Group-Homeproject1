@@ -8,18 +8,20 @@ class Scheduler(object):
     def __init__(self):
         pass
 
-    def getSchedule(self, start, end, freq,referencedate):
-        return pd.date_range(start=start,end=end,freq=freq).date
-    
-    def getDatelist(self,start,end,freq,ref_date):
-        date0=start
-        self.datelist=[]
+    # def getSchedule(self, start, end, freq,referencedate):
+    #     return pd.date_range(start=start,end=end,freq=freq).date
+
+# Delete getSchedule function and modify the getDatelist function to the getSchedule function
+  
+    def getSchedule(self,start,end,freq,referencedate): #change this to a
+        date0 = start
+        datelist=[]
         delay=self.extractDelay(freq=freq)
-        while (date0<=end):
-            if(ref_date<=date0):
-                self.datelist.append(date0)
-            date0+=delay
-        return self.datelist
+        while (date0 < end):
+            if(referencedate <= date0):
+                datelist.append(date0)
+            date0+= self.extractDelay(freq=freq)
+        return datelist
 
 #D is day, W week and M month, Y year. Want to extract relative delta. 
 #This is a way to create cashflows needs a little improvement
